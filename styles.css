@@ -101,9 +101,17 @@ form button:hover {
     background-color: darkred;
 }
 
-.music-illustration {
-    position: absolute;
-    bottom: 60px;
-    right: 550px;
-    width: 400px;
+@media screen and (min-width: 1024px) {
+    .music-illustration {
+        position: absolute;
+        bottom: 60px;
+        right: 550px;
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .music-illustration {
+        display: none;
+    }
 }
