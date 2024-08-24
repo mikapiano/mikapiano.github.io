@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="secondary-page">
+    <header><h1>お問い合わせ</h1></header>
+    <nav>
+        <ul>
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="lessons.html">レッスン内容</a></li>
+            <li><a href="pricing.html">料金案内</a></li>
+            <li><a href="instructor.html">講師紹介</a></li>
+            <li><a href="about.html">教室の紹介</a></li>
+            <li><a href="access.html">アクセス</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+    </nav>
+    <section>
+        <h1>お問い合わせ・見学・体験レッスンの申込み</h1>
+        <form onsubmit="submitEmail()" method="post">
+            <label for="name">お名前 :</label>
+            <input type="text" id="name" name="name" required><br>
+            <label for="email">メールアドレス :</label>
+            <input type="email" id="email" name="email" required><br>
+            <label for="message">メッセージ :</label>
+            <textarea id="message" name="message" required></textarea><br>
+            <button type="submit">送信</button>
+        </form>
+
+        <script>
+        function submitEmail() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var message = document.getElementById('message').value;
+    
+            // メールの本文を自動生成
+            var mailto_link = "mailto:mikamikahappy1015@gmail.com?subject=" + encodeURIComponent("お問い合わせ・見学・体験レッスンの申込み") + "&body=" + encodeURIComponent("お名前 : " + name + "\n\nメールアドレス : " + email + "\n\nメッセージ : " + message);
+            // メールクライアントを開く
+            window.location.href = mailto_link;
+         }
+         </script>
+    </section>
+</body>
+</html>
