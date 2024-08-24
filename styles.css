@@ -64,6 +64,10 @@ section {
     background-size: 30%;
 }
 
+body.contact-page section {
+    background-image: none;
+}
+
 .instructor-photo, .teaching-materials {
     width: 20%;
     height: auto;
