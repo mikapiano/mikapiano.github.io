@@ -118,4 +118,7 @@ form button:hover {
     .music-illustration {
         display: none;
     }
+    body.access-page section {
+        background-position: center right;
+    }
 }
