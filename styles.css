@@ -61,6 +61,7 @@ section {
     background-image: url('music.jpg');
     background-position: bottom right;
     background-repeat: no-repeat;
+    background-size: 30%;
 }
 
 .instructor-photo, .teaching-materials {
