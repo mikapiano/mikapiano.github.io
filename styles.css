@@ -69,7 +69,7 @@ body.contact-page section {
     background-image: none;
 }
 
-.instructor-photo, .teaching-materials {
+.teaching-materials {
     width: 20%;
     height: auto;
 }
@@ -113,6 +113,10 @@ form button:hover {
         right: 550px;
         width: 400px;
     }
+    .instructor-photo {
+        width: 20%;
+        height: auto;
+    }
 }
 
 @media screen and (max-width: 1023px) {
@@ -124,5 +128,9 @@ form button:hover {
     }
     .highlight {
         font-size: 1.5em;
+    }
+    .instructor-photo {
+        width: 40%;
+        height: auto;
     }
 }
