@@ -48,6 +48,7 @@ nav ul li a {
     text-decoration: none;
     font-size: 1.2em;
     border-radius: 20px;
+    margin: 20px auto;
 }
 
 .cta-button:hover {
@@ -120,5 +121,8 @@ form button:hover {
     }
     body.access-page section, body.lessons-page section {
         background-position: center right;
+    }
+    .highlight {
+        font-size: 1.5em;
     }
 }
