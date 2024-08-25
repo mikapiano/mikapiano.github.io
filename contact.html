@@ -20,7 +20,7 @@
     </nav>
     <section>
         <h1>お問い合わせ・見学・体験レッスンの申込み</h1>
-        <form onsubmit="submitEmail()" method="get">
+        <form id="contactForm" onsubmit="submitEmail(event)">
             <label for="name">お名前 :</label>
             <input type="text" id="name" name="name" required><br>
             <label for="email">メールアドレス :</label>
@@ -32,7 +32,8 @@
         </form>
 
         <script>
-        function submitEmail() {
+        function submitEmail(event) {
+            event.preventDefault();
             var name = document.getElementById('name').value;
             var email = document.getElementById('email').value;
             var message = document.getElementById('message').value;
