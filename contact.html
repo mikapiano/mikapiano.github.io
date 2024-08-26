@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <title>お問い合わせ</title>
 </head>
 <body class="secondary-page contact-page">
     <header>
@@ -24,8 +25,9 @@
         <form id="contactForm" onsubmit="submitEmail(event)">
             <label for="name">お名前 :</label>
             <input type="text" id="name" name="name" required><br>
-            <label for="birth-year">生年月日 :</label>
-            <select id="birth-year" name="birth-year" required>
+
+            <label for="birth_year">生年月日 :</label>
+            <select id="birth_year" name="birth_year" required onchange="updateDays()">
                 <option value="">年</option>
                 <script>
                     const currentYear = new Date().getFullYear();
@@ -34,7 +36,8 @@
                     }
                 </script>
             </select>
-            <select id="birth_month" name="birth_month" required>
+
+            <select id="birth_month" name="birth_month" required onchange="updateDays()">
                 <option value="">月</option>
                 <script>
                     for (let month = 1; month <= 12; month++) {
@@ -42,20 +45,17 @@
                     }
                 </script>
             </select>
+
             <select id="birth_day" name="birth_day" required>
                 <option value="">日</option>
-                <script>
-                    for (let day = 1; day <= 31; day++) {
-                        document.write(`<option value="${day}">${day}日</option>`);
-                    }
-                </script>
             </select><br>
+
             <label for="address">住所 :</label>
             <input type="text" id="address" name="address" required><br>
-            <label for="email-local">メールアドレス :</label>
-            <input type="text" id="email-local" name="email-local" placeholder="example" required>
-            <span>@</span>
-            <input type="text" id="email-domain" name="email-domain" placeholder="example.com" required><br>
+
+            <label for="email">メールアドレス :</label>
+            <input type="email" id="email" name="email" required><br>
+
             <label for="preferred_days">ご希望の曜日 :</label><br>
             <select id="preferred_days" name="preferred_days[]" multiple required>
                 <option value="月曜日">月曜日</option>
@@ -66,24 +66,64 @@
                 <option value="土曜日">土曜日</option>
                 <option value="日曜日">日曜日</option>
             </select><br>
+
             <label for="message">メッセージ :</label>
             <textarea id="message" name="message" required></textarea><br>
+
             <button type="submit">送信</button>
+
             <p>「送信」ボタンをクリックすると、お使いのメールソフトが起動します。起動したメールから送信を完了していただきますよう、お願いいたします。</p>
         </form>
+
         <script>
+        // 日数を更新する関数
+        function updateDays() {
+            const year = document.getElementById('birth_year').value;
+            const month = document.getElementById('birth_month').value;
+            const daySelect = document.getElementById('birth_day');
+
+            if (year && month) {
+                let daysInMonth;
+
+                // 月ごとの日数を設定
+                if (month == 2) { // 2月
+                    // うるう年判定
+                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                        daysInMonth = 29;
+                    } else {
+                        daysInMonth = 28;
+                    }
+                } else if ([4, 6, 9, 11].includes(parseInt(month))) {
+                    // 4月, 6月, 9月, 11月は30日まで
+                    daysInMonth = 30;
+                } else {
+                    // それ以外の月は31日まで
+                    daysInMonth = 31;
+                }
+
+                // 日の選択肢を更新
+                daySelect.innerHTML = ''; // 一旦クリア
+                daySelect.appendChild(new Option('日', ''));
+                for (let day = 1; day <= daysInMonth; day++) {
+                    daySelect.appendChild(new Option(`${day}日`, day));
+                }
+            }
+        }
+
+        // メール送信処理
         function submitEmail(event) {
-            event.preventDefault();
+            event.preventDefault(); // フォームのデフォルトの送信動作を無効にする
+
             var name = document.getElementById('name').value;
             var birthYear = document.getElementById('birth_year').value;
             var birthMonth = document.getElementById('birth_month').value;
             var birthDay = document.getElementById('birth_day').value;
             var address = document.getElementById('address').value;
-            var emailLocal = document.getElementById('email-local').value;
-            var emailDomain = document.getElementById('email-domain').value;
-            var email = `${emailLocal}@${emailDomain}`;
+            var email = document.getElementById('email').value;
             var preferredDays = Array.from(document.getElementById('preferred_days').selectedOptions).map(option => option.value).join(", ");
             var message = document.getElementById('message').value;
+
+            // メールの内容を組み立てる
             var mailto_link = "mailto:mikamikahappy1015@gmail.com?subject=" + encodeURIComponent("お問い合わせ・見学・体験レッスンの申込み") + 
                 "&body=" + encodeURIComponent(
                     "お名前 : " + name + "\n\n" +
@@ -93,9 +133,10 @@
                     "ご希望の曜日 : " + preferredDays + "\n\n" +
                     "メッセージ : " + message
                 );
-             window.location.href = mailto_link;
-         }
-         </script>
+
+            window.location.href = mailto_link;
+        }
+        </script>
     </section>
 </body>
 </html>
