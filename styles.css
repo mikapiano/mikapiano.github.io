@@ -15,8 +15,7 @@ header {
 
 nav ul {
     background-color: green;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     justify-content: center;
     padding: 0;
     margin: 0;
