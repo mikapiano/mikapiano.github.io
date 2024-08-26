@@ -74,13 +74,23 @@
         function submitEmail(event) {
             event.preventDefault();
             var name = document.getElementById('name').value;
+            var birthYear = document.getElementById('birth_year').value;
+            var birthMonth = document.getElementById('birth_month').value;
+            var birthDay = document.getElementById('birth_day').value;
+            var address = document.getElementById('address').value;
             var email = document.getElementById('email').value;
+            var preferredDays = Array.from(document.getElementById('preferred_days').selectedOptions).map(option => option.value).join(", ");
             var message = document.getElementById('message').value;
-    
-            // メールの本文を自動生成
-            var mailto_link = "mailto:mikamikahappy1015@gmail.com?subject=" + encodeURIComponent("お問い合わせ・見学・体験レッスンの申込み") + "&body=" + encodeURIComponent("お名前 : " + name + "\n\nメールアドレス : " + email + "\n\nメッセージ : " + message);
-            // メールクライアントを開く
-            window.location.href = mailto_link;
+            var mailto_link = "mailto:mikamikahappy1015@gmail.com?subject=" + encodeURIComponent("お問い合わせ・見学・体験レッスンの申込み") + 
+                "&body=" + encodeURIComponent(
+                    "お名前 : " + name + "\n\n" +
+                    "生年月日 : " + birthYear + "年 " + birthMonth + "月 " + birthDay + "日\n\n" +
+                    "住所 : " + address + "\n\n" +
+                    "メールアドレス : " + email + "\n\n" +
+                    "ご希望の曜日 : " + preferredDays + "\n\n" +
+                    "メッセージ : " + message
+                );
+             window.location.href = mailto_link;
          }
          </script>
     </section>
