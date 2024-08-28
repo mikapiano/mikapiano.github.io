@@ -103,8 +103,12 @@ form input, form textarea {
 
 form select {
     padding: 5px;
-    margin-top: -15px;
+    margin-top: -10px;
     margin-bottom: 20px;
+}
+
+option[selected][disabled] {
+  display: none;
 }
 
 form button {
