@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>お問い合わせ</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQueryを利用 -->
 </head>
 <body class="secondary-page contact-page">
     <header>
@@ -26,18 +26,18 @@
             <label for="name">お名前 :</label>
             <input type="text" id="name" name="name" required><br>
 
-            <label for="birth_year">生年月日 :</label>
-            <select id="birth_year" name="birth_year" required onchange="updateDays()">
+            <!-- 生年月日 -->
+            <label for="birth-year">生年月日 :</label>
+            <select id="birth-year" name="birth-year" required>
                 <option value="">年</option>
                 <script>
                     const currentYear = new Date().getFullYear();
-                    for (let year = currentYear-100; year <= currentYear; year++) {
+                    for (let year = currentYear - 100; year <= currentYear; year++) {
                         document.write(`<option value="${year}">${year}</option>`);
                     }
                 </script>
             </select>
-
-            <select id="birth_month" name="birth_month" required onchange="updateDays()">
+            <select id="birth_month" name="birth_month" required>
                 <option value="">月</option>
                 <script>
                     for (let month = 1; month <= 12; month++) {
@@ -45,18 +45,37 @@
                     }
                 </script>
             </select>
-
             <select id="birth_day" name="birth_day" required>
                 <option value="">日</option>
+                <script>
+                    for (let day = 1; day <= 31; day++) {
+                        document.write(`<option value="${day}">${day}日</option>`);
+                    }
+                </script>
             </select><br>
 
-            <label for="address">住所 :</label>
+            <!-- 郵便番号 -->
+            <label for="postal-code1">郵便番号 :</label>
+            <input type="text" id="postal-code1" name="postal-code1" maxlength="3" placeholder="123" required style="width: 50px;">
+            －
+            <input type="text" id="postal-code2" name="postal-code2" maxlength="4" placeholder="4567" required style="width: 70px;"><br>
+
+            <!-- 都道府県・市区町村・住所 -->
+            <label for="prefecture">都道府県 :</label>
+            <input type="text" id="prefecture" name="prefecture" required readonly><br>
+            <label for="city">市区町村 :</label>
+            <input type="text" id="city" name="city" required readonly><br>
+            <label for="address">番地・建物名 :</label>
             <input type="text" id="address" name="address" required><br>
 
+            <!-- メールアドレス -->
             <label for="email">メールアドレス :</label>
-            <input type="email" id="email" name="email" required><br>
+            <input type="text" id="emailLocal" name="emailLocal" required placeholder="example" required style="width: 250px;"> 
+            ＠
+            <input type="text" id="emailDomain" name="emailDomain" required placeholder="domain.com" required style="width: 100px;"><br>
 
-            <label for="preferred_days">ご希望の曜日 :</label>
+            <!-- 希望曜日 -->
+            <label for="preferred_days">ご希望の曜日 :</label><br>
             <select id="preferred_days" name="preferred_days[]" multiple required>
                 <option value="月曜日">月曜日</option>
                 <option value="火曜日">火曜日</option>
@@ -67,63 +86,65 @@
                 <option value="日曜日">日曜日</option>
             </select><br>
 
+            <!-- メッセージ -->
             <label for="message">メッセージ :</label>
             <textarea id="message" name="message" required></textarea><br>
 
+            <!-- 送信ボタン -->
             <button type="submit">送信</button>
 
             <p>「送信」ボタンをクリックすると、お使いのメールソフトが起動します。起動したメールから送信を完了していただきますよう、お願いいたします。</p>
         </form>
 
         <script>
-        // 日数を更新する関数
-        function updateDays() {
-            const year = document.getElementById('birth_year').value;
-            const month = document.getElementById('birth_month').value;
-            const daySelect = document.getElementById('birth_day');
-
-            if (year && month) {
-                let daysInMonth;
-
-                // 月ごとの日数を設定
-                if (month == 2) { // 2月
-                    // うるう年判定
-                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
-                        daysInMonth = 29;
-                    } else {
-                        daysInMonth = 28;
-                    }
-                } else if ([4, 6, 9, 11].includes(parseInt(month))) {
-                    // 4月, 6月, 9月, 11月は30日まで
-                    daysInMonth = 30;
-                } else {
-                    // それ以外の月は31日まで
-                    daysInMonth = 31;
-                }
-
-                // 日の選択肢を更新
-                daySelect.innerHTML = ''; // 一旦クリア
-                daySelect.appendChild(new Option('日', ''));
-                for (let day = 1; day <= daysInMonth; day++) {
-                    daySelect.appendChild(new Option(`${day}日`, day));
-                }
+        $(document).ready(function() {
+            function getFullPostalCode() {
+                // 郵便番号の前半と後半を結合
+                return $('#postal-code1').val() + $('#postal-code2').val();
             }
-        }
 
-        // メール送信処理
+            // 郵便番号が入力されたら住所を自動入力
+            $('#postal-code1, #postal-code2').on('input', function() {
+                var postalCode = getFullPostalCode();
+
+                if (postalCode.length === 7) {
+                    $.ajax({
+                        url: `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.results) {
+                                var result = data.results[0];
+                                $('#prefecture').val(result.address1); // 都道府県
+                                $('#city').val(result.address2 + result.address3); // 市区町村
+                            } else {
+                                $('#prefecture').val('');
+                                $('#city').val('');
+                            }
+                        }
+                    });
+                } else {
+                    $('#prefecture').val('');
+                    $('#city').val('');
+                }
+            });
+        });
+
         function submitEmail(event) {
-            event.preventDefault(); // フォームのデフォルトの送信動作を無効にする
+            event.preventDefault();
 
+            // フォームデータ取得
             var name = document.getElementById('name').value;
-            var birthYear = document.getElementById('birth_year').value;
+            var birthYear = document.getElementById('birth-year').value;
             var birthMonth = document.getElementById('birth_month').value;
             var birthDay = document.getElementById('birth_day').value;
-            var address = document.getElementById('address').value;
-            var email = document.getElementById('email').value;
+            var address = document.getElementById('prefecture').value + document.getElementById('city').value + document.getElementById('address').value;
+            var emailLocal = document.getElementById('emailLocal').value;
+            var emailDomain = document.getElementById('emailDomain').value;
+            var email = `${emailLocal}@${emailDomain}`;
             var preferredDays = Array.from(document.getElementById('preferred_days').selectedOptions).map(option => option.value).join(", ");
             var message = document.getElementById('message').value;
 
-            // メールの内容を組み立てる
+            // メールリンク生成
             var mailto_link = "mailto:mikamikahappy1015@gmail.com?subject=" + encodeURIComponent("お問い合わせ・見学・体験レッスンの申込み") + 
                 "&body=" + encodeURIComponent(
                     "お名前 : " + name + "\n\n" +
@@ -134,9 +155,9 @@
                     "メッセージ : " + message
                 );
 
-            window.location.href = mailto_link;
-        }
-        </script>
+             window.location.href = mailto_link;
+         }
+         </script>
     </section>
 </body>
 </html>
