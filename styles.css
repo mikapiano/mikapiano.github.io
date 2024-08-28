@@ -103,8 +103,16 @@ form input, form textarea {
 
 form select {
     padding: 5px;
-    margin-top: -10px;
+    margin-top: 10px;
     margin-bottom: 20px;
+}
+
+label[for="preferred_days"] {
+    margin-bottom: -10px;
+}
+
+#preferred_days {
+    margin-top: -10px;
 }
 
 form button {
