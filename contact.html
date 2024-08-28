@@ -31,7 +31,7 @@
                 <option value="">年</option>
                 <script>
                     const currentYear = new Date().getFullYear();
-                    for (let year = 1900; year <= currentYear; year++) {
+                    for (let year = currentYear-100; year <= currentYear; year++) {
                         document.write(`<option value="${year}">${year}</option>`);
                     }
                 </script>
