@@ -107,10 +107,6 @@ form select {
     margin-bottom: 20px;
 }
 
-option[selected][disabled] {
-  display: none;
-}
-
 form button {
     background-color: red;
     color: white;
