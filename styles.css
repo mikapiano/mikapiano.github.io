@@ -107,11 +107,11 @@ form select {
     margin-bottom: 20px;
 }
 
-label[for="preferred_days"] {
+label[for="preferred_days"], label[for="preferred_courses"] {
     margin-bottom: -10px;
 }
 
-#preferred_days {
+#preferred_days, #preferred_courses {
     margin-top: -10px;
 }
 
