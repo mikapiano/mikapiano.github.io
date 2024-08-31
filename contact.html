@@ -67,9 +67,7 @@
 
             <!-- メールアドレス -->
             <label for="email">メールアドレス :</label>
-            <input type="text" id="emailLocal" name="emailLocal" required placeholder="example" required style="width: 250px;"> 
-            ＠
-            <input type="text" id="emailDomain" name="emailDomain" required placeholder="domain.com" required style="width: 100px;"><br>
+            <input type="text" id="email" name="email" required placeholder="example@domain.com" required style="width: 250px;"><br>
 
             <!-- ご希望のコース -->
             <label for="preferred_courses">ご希望のコース（複数選択可） :</label><br>
@@ -80,7 +78,7 @@
                 <option value="大人60分コース">大人 60分コース</option>
             </select><br>
 
-            <!-- ご希望の曜日 -->
+            <!-- 希望曜日 -->
             <label for="preferred_days">ご希望の曜日（複数選択可）：</label><br>
             <select id="preferred_days" name="preferred_days[]" multiple required>
                 <optgroup hidden>選択してください</optgroup>
@@ -175,9 +173,7 @@
             var birthMonth = document.getElementById('birth_month').value;
             var birthDay = document.getElementById('birth_day').value;
             var address = document.getElementById('prefecture').value + document.getElementById('city').value + document.getElementById('address').value;
-            var emailLocal = document.getElementById('emailLocal').value;
-            var emailDomain = document.getElementById('emailDomain').value;
-            var email = `${emailLocal}@${emailDomain}`;
+            var email = document.getElementById('email').value;
             var preferredDays = Array.from(document.getElementById('preferred_days').selectedOptions).map(option => option.value).join(", ");
             var preferredCourses = Array.from(document.getElementById('preferred_courses').selectedOptions).map(option => option.value).join(", ");
             var message = document.getElementById('message').value;
