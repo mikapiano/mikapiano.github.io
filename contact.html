@@ -27,17 +27,18 @@
             <input type="text" id="name" name="name" required><br>
 
             <!-- 生年月日 -->
-            <label for="birth-year">生年月日 :</label>
-            <select id="birth-year" name="birth-year" required>
+            <label for="birth_year">生年月日 :</label>
+            <select id="birth_year" name="birth_year" required onchange="updateDays()">
                 <option value="">年</option>
                 <script>
                     const currentYear = new Date().getFullYear();
-                    for (let year = currentYear - 100; year <= currentYear; year++) {
+                    for (let year = currentYear-100; year <= currentYear; year++) {
                         document.write(`<option value="${year}">${year}</option>`);
                     }
                 </script>
             </select>
-            <select id="birth_month" name="birth_month" required>
+
+            <select id="birth_month" name="birth_month" required onchange="updateDays()">
                 <option value="">月</option>
                 <script>
                     for (let month = 1; month <= 12; month++) {
@@ -45,13 +46,9 @@
                     }
                 </script>
             </select>
+
             <select id="birth_day" name="birth_day" required>
                 <option value="">日</option>
-                <script>
-                    for (let day = 1; day <= 31; day++) {
-                        document.write(`<option value="${day}">${day}日</option>`);
-                    }
-                </script>
             </select><br>
 
             <!-- 郵便番号 -->
@@ -74,6 +71,15 @@
             ＠
             <input type="text" id="emailDomain" name="emailDomain" required placeholder="domain.com" required style="width: 100px;"><br>
 
+            <!-- ご希望のコース -->
+            <label for="preferred_courses">ご希望のコース（複数選択可） :</label><br>
+            <select id="preferred_courses" name="preferred_courses[]" multiple required>
+                <option value="子ども30分コース">子ども30分コース</option>
+                <option value="子ども45分コース">子ども45分コース</option>
+                <option value="大人45分コース">大人45分コース</option>
+                <option value="大人60分コース">大人60分コース</option>
+            </select><br>
+
             <!-- 希望曜日 -->
             <label for="preferred_days">ご希望の曜日（複数選択可）：</label><br>
             <select id="preferred_days" name="preferred_days[]" multiple required>
@@ -94,6 +100,40 @@
         </form>
 
         <script>
+        // 日数を更新する関数
+        function updateDays() {
+            const year = document.getElementById('birth_year').value;
+            const month = document.getElementById('birth_month').value;
+            const daySelect = document.getElementById('birth_day');
+
+            if (year && month) {
+                let daysInMonth;
+
+                // 月ごとの日数を設定
+                if (month == 2) { // 2月
+                    // うるう年判定
+                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                        daysInMonth = 29;
+                    } else {
+                        daysInMonth = 28;
+                    }
+                } else if ([4, 6, 9, 11].includes(parseInt(month))) {
+                    // 4月, 6月, 9月, 11月は30日まで
+                    daysInMonth = 30;
+                } else {
+                    // それ以外の月は31日まで
+                    daysInMonth = 31;
+                }
+
+                // 日の選択肢を更新
+                daySelect.innerHTML = ''; // 一旦クリア
+                daySelect.appendChild(new Option('日', ''));
+                for (let day = 1; day <= daysInMonth; day++) {
+                    daySelect.appendChild(new Option(`${day}日`, day));
+                }
+            }
+        }
+
         $(document).ready(function() {
             function getFullPostalCode() {
                 // 郵便番号の前半と後半を結合
@@ -131,7 +171,7 @@
 
             // フォームデータ取得
             var name = document.getElementById('name').value;
-            var birthYear = document.getElementById('birth-year').value;
+            var birthYear = document.getElementById('birth_year').value;
             var birthMonth = document.getElementById('birth_month').value;
             var birthDay = document.getElementById('birth_day').value;
             var address = document.getElementById('prefecture').value + document.getElementById('city').value + document.getElementById('address').value;
@@ -139,6 +179,7 @@
             var emailDomain = document.getElementById('emailDomain').value;
             var email = `${emailLocal}@${emailDomain}`;
             var preferredDays = Array.from(document.getElementById('preferred_days').selectedOptions).map(option => option.value).join(", ");
+            var preferredCourses = Array.from(document.getElementById('preferred_courses').selectedOptions).map(option => option.value).join(", ");
             var message = document.getElementById('message').value;
 
             // メールリンク生成
@@ -149,6 +190,7 @@
                     "住所 : " + address + "\n\n" +
                     "メールアドレス : " + email + "\n\n" +
                     "ご希望の曜日 : " + preferredDays + "\n\n" +
+                    "ご希望のコース : " + preferredCourses + "\n\n" +
                     "メッセージ : " + message
                 );
 
