@@ -87,6 +87,22 @@
                 <option value="木曜日">木曜日</option>
             </select><br>
 
+            <!-- ご希望の時間帯 -->
+            <label for="preferred_times">ご希望の時間帯（複数選択可） :</label><br>
+            <select id="preferred_times" name="preferred_times[]" multiple required>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+            </select><br>
+
             <!-- メッセージ -->
             <label for="message">メッセージ :</label>
             <textarea id="message" name="message" required></textarea><br>
@@ -176,6 +192,7 @@
             var email = document.getElementById('email').value;
             var preferredDays = Array.from(document.getElementById('preferred_days').selectedOptions).map(option => option.value).join(", ");
             var preferredCourses = Array.from(document.getElementById('preferred_courses').selectedOptions).map(option => option.value).join(", ");
+            var preferredTimes = Array.from(document.getElementById('preferred_times').selectedOptions).map(option => option.value).join(", ");
             var message = document.getElementById('message').value;
 
             // メールリンク生成
@@ -187,6 +204,7 @@
                     "メールアドレス : " + email + "\n\n" +
                     "ご希望のコース : " + preferredCourses + "\n\n" +
                     "ご希望の曜日 : " + preferredDays + "\n\n" +
+                    "ご希望の時間帯 : " + preferredTimes + "\n\n" +
                     "メッセージ : " + message
                 );
 
