@@ -130,7 +130,7 @@ form button:hover {
 @media screen and (min-width: 1024px) {
     .music-illustration {
         position: absolute;
-        top: 650px;
+        top: 750px;
         left: 700px;
         width: 400px;
     }
