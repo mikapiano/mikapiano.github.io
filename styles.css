@@ -1,4 +1,4 @@
-.secondary-page {
+body {
     background-color: #bce2e8;
 }
 
@@ -16,12 +16,17 @@ header {
 nav ul {
     background-color: green;
     display: grid;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    list-style-type: none;
+    list-style-type: none; 
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: center;
+    margin: 20px;
 }
 
 .hero {
@@ -37,10 +42,6 @@ nav ul {
     flex-direction: column;
 }
 
-.highlight {
-    font-size: 2em;
-}
-
 .cta-button {
     background-color: red;
     color: white;
@@ -48,7 +49,7 @@ nav ul {
     text-decoration: none;
     font-size: 1.2em;
     border-radius: 20px;
-    margin: 20px auto;
+    margin: 20px;
 }
 
 .cta-button:hover {
@@ -65,18 +66,14 @@ section {
     background-size: 30%;
 }
 
-body.contact-page section {
-    background-image: none;
-}
-
-.teaching-materials {
-    width: 20%;
-    height: auto;
-}
-
-.classroom-photo {
-    width: 50%;
-    height: auto;
+.pricing-page {
+    padding: 20px;
+    background-color: #fff;
+    position: relative;
+    background-image: url('music.jpg'), url('music_note.jpg');
+    background-position: bottom right, top 50px right 50px;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 30%, 30%;
 }
 
 form {
@@ -101,7 +98,7 @@ form select {
     margin-bottom: 20px;
 }
 
-label[for="preferred_days"], label[for="preferred_courses"], label[for="preferred_times"] {
+label[for^="preferred_"] {
     margin-bottom: -10px;
 }
 
@@ -122,22 +119,10 @@ form button:hover {
 }
 
 @media screen and (min-width: 1024px) {
-    .music-illustration {
-        position: absolute;
-        top: 600px;
-        left: 700px;
-        width: 400px;
-    }
     .instructor-photo {
         width: 20%;
-        height: auto;
     }
     nav ul li a {
-        text-decoration: none;
-        color: black;
-        display: block;
-        text-align: center;
-        margin: 20px;
         font-size: 24px;
     }
 }
@@ -146,22 +131,16 @@ form button:hover {
     .music-illustration {
         display: none;
     }
-    body.access-page section, body.pricing-page section {
-        background-position: center right;
+    .pricing-page {
+        background-image: none;
     }
     .highlight {
         font-size: 1.5em;
     }
     .instructor-photo {
         width: 40%;
-        height: auto;
     }
     nav ul li a {
-        text-decoration: none;
-        color: black;
-        display: block;
-        text-align: center;
-        margin: 20px;
         font-size: 16px;
     }
 }
