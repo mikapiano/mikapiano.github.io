@@ -143,4 +143,12 @@ form button:hover {
     nav ul li a {
         font-size: 16px;
     }
+    .cta-button {
+        font-size: 16px;
+        padding: 10px 25px;
+    }
+    .hero .overlay {
+        font-size: 16px;
+
+    }
 }
