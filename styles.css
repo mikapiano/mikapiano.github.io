@@ -1,9 +1,8 @@
-body {
+body, header {
     background-color: #bce2e8;
 }
 
 header {
-    background-color: #bce2e8;
     color: blue;
     padding: 10px;
     text-align: center;
@@ -27,6 +26,7 @@ nav ul li a {
     display: block;
     text-align: center;
     margin: 20px;
+    font-size: 24px;
 }
 
 .hero {
@@ -56,10 +56,13 @@ nav ul li a {
     background-color: darkred;
 }
 
-section {
+section, .pricing-page {
     padding: 20px;
     background-color: #fff;
     position: relative;
+}
+
+section {
     background-image: url('music.jpg');
     background-position: bottom 50px right 50px;
     background-repeat: no-repeat;
@@ -67,12 +70,8 @@ section {
 }
 
 .pricing-page {
-    padding: 20px;
-    background-color: #fff;
-    position: relative;
     background-image: url('music.jpg'), url('music_note.jpg');
     background-position: bottom 50px right 50px, top 50px right 50px;
-    background-repeat: no-repeat, no-repeat;
     background-size: 30%, 30%;
 }
 
@@ -85,17 +84,18 @@ form label {
     margin-bottom: 10px;
 }
 
-form input, form textarea {
-    width: 90%;
-    padding: 10px;
+form input, form textarea, form select {
     margin-top: 10px;
     margin-bottom: 20px;
 }
 
+form input, form textarea {
+    width: 90%;
+    padding: 10px;
+}
+
 form select {
     padding: 5px;
-    margin-top: 10px;
-    margin-bottom: 20px;
 }
 
 label[for^="preferred_"] {
@@ -118,24 +118,12 @@ form button:hover {
     background-color: darkred;
 }
 
-@media screen and (min-width: 1024px) {
-    .instructor-photo {
-        width: 20%;
-    }
-    nav ul li a {
-        font-size: 24px;
-    }
-}
-
 @media screen and (max-width: 1023px) {
     .music-illustration {
         display: none;
     }
     .phone-page {
         background-image: none;
-    }
-    .instructor-photo {
-        width: 40%;
     }
     nav ul li a {
         font-size: 16px;
@@ -144,8 +132,7 @@ form button:hover {
         font-size: 16px;
         padding: 10px 25px;
     }
-    .hero .overlay {
+    body.index-page header, .hero .overlay {
         font-size: 10px;
-
     }
 }
