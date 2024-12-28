@@ -122,7 +122,7 @@ form button:hover {
     .music-illustration {
         display: none;
     }
-    .phone-page {
+    .phone-page, .pricing-page {
         background-image: none;
     }
     nav ul li a {
