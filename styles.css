@@ -133,6 +133,6 @@ form button:hover {
         padding: 10px 25px;
     }
     body.index-page header, .hero .overlay {
-        font-size: 10px;
+        font-size: 12px;
     }
 }
